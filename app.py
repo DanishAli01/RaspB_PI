@@ -27,8 +27,13 @@ app = Flask(__name__)
 
 
 # Pinpoints the address
-@app.route('/home')
+@app.route('/')
 def index():
+    # Render Templates
+     return render_template("home.html")
+
+@app.route('/home')
+def home():
     # Render Templates
      return render_template("home.html")
 

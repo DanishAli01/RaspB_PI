@@ -1,7 +1,30 @@
-from flask import Flask, render_template
+# -*- coding: utf-8 -*-
+from flask import Flask, render_template, jsonify
+from flask_restful import Resource, Api
+import sqlite3
+from sqlite3 import Error
+
+def create_connection(db_file):
+    try:
+        conn = sqlite3.connect(db_file)
+        return conn
+    except Error as e:
+        print(e)
+
+    return None
+
+def select_all_temp(conn):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM temps")
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        print(row)
 
 # Making instance of Flask Class
 app = Flask(__name__)
+
 
 # Pinpoints the address
 @app.route('/home')
@@ -14,8 +37,25 @@ def about():
     # Render Templates
      return render_template("about.html")
 
+@app.route('/plot')
+def plot():
+    return render_template("plot.html")
+
+@app.route('/api/get_temp')
+def temperature():
+    # database = "/Users/tohir/Downloads/sqlite-autoconf-3230100/project"
+    #
+    # # create a database connection
+    # conn = create_connection(database)
+    # with conn:
+    #     print("2. Query all temps")
+    #     select_all_temp(conn)
+    temp = [17, 24, 66, 54, 30, 65, 12, 33, 17, 9]
+    humid = [19, 42, 33, 30, 45, 55, 21, 53, 47, 33]
+    return jsonify({'name' : 'temperature', 'data': temp}, {'name' : 'Humidity', 'data' : humid})
+
 @app.route('/Power')
-def about():
+def power():
     # Render Templates
      return render_template(".html")
 

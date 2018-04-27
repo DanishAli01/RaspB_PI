@@ -14,10 +14,21 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<!-- Filter bar -->
+<div class="container">
+  <div class="well">
+    <input type="date" name="start_date" class="datepick" value="">
+    <input type="date" name="end_date" class="datepick" value="">
+    <button type="button" class="btn btn-primary" name="button">
+      <i class="fa fa-search"></i>Filter
+    </button>
+  </div>
+</div>
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
 <script>
+// $('.datepick').datepicker();
 $.get("/api/get_temp", function(data){
   Highcharts.chart('container', {
 

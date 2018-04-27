@@ -15,12 +15,12 @@ def create_connection(db_file):
 
 def select_all_temp(conn):
     cur = conn.cursor()
+    print("connected")
     cur.execute("SELECT * FROM temps")
+    print("executed")
+    return cur.fetchall()
 
-    rows = cur.fetchall()
 
-    for row in rows:
-        print(row)
 
 # Making instance of Flask Class
 app = Flask(__name__)
@@ -48,16 +48,25 @@ def plot():
 
 @app.route('/api/get_temp')
 def temperature():
-    # database = "/Users/tohir/Downloads/sqlite-autoconf-3230100/project"
-    #
-    # # create a database connection
-    # conn = create_connection(database)
-    # with conn:
-    #     print("2. Query all temps")
-    #     select_all_temp(conn)
-    temp = [17, 24, 66, 54, 30, 65, 12, 33, 17, 9]
-    humid = [19, 42, 33, 30, 45, 55, 21, 53, 47, 33]
+    database = "/Users/tohir/Downloads/sqlite-autoconf-3230100/project"
+
+    # create a database connection
+    conn = create_connection(database)
+    with conn:
+        print("2. Query all temps")
+        #select_all_temp(conn)
+        rows = select_all_temp(conn)
+
+    # build data
+    temp = []
+    humid = []
+    for row in rows:
+        print(row[0])
+        temp.append(row[2])
+        humid.append(row[3])
+
     return jsonify({'name' : 'temperature', 'data': temp}, {'name' : 'Humidity', 'data' : humid})
+    #return jsonify(rows)
 
 @app.route('/Power')
 def power():

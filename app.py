@@ -60,12 +60,14 @@ def temperature():
     # build data
     temp = []
     humid = []
+    dates = []
     for row in rows:
         print(row[0])
         temp.append(row[2])
         humid.append(row[3])
+        dates.append(row[0])
 
-    return jsonify({'name' : 'temperature', 'data': temp}, {'name' : 'Humidity', 'data' : humid})
+    return jsonify({'temperature': temp, 'humidity' : humid, 'categories' : dates})
     #return jsonify(rows)
 
 @app.route('/Power')

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask_restful import Resource, Api
 import sqlite3
 from sqlite3 import Error
@@ -13,10 +13,16 @@ def create_connection(db_file):
 
     return None
 
-def select_all_temp(conn):
+def select_all_temp(conn, startDate, endDate):
     cur = conn.cursor()
     print("connected")
-    cur.execute("SELECT * FROM temps")
+    sql = 'SELECT * FROM temps'
+    if startDate != "0" :
+        sql = sql + " where tdate >= ?"
+    if endDate != "0" :
+        sql = sql + " and tdate <= ?"
+    print(sql)
+    cur.execute(sql, (startDate, endDate))
     print("executed")
     return cur.fetchall()
 
@@ -46,23 +52,26 @@ def about():
 def plot():
     return render_template("plot.html")
 
-@app.route('/api/get_temp')
+@app.route('/api/get_temp', methods=["GET", "POST"])
 def temperature():
     database = "/Users/tohir/Downloads/sqlite-autoconf-3230100/project"
+
+    # get url params
+    startDate = request.args.get('start_date')
+    endDate = request.args.get('end_date')
 
     # create a database connection
     conn = create_connection(database)
     with conn:
         print("2. Query all temps")
         #select_all_temp(conn)
-        rows = select_all_temp(conn)
+        rows = select_all_temp(conn, startDate, endDate)
 
     # build data
     temp = []
     humid = []
     dates = []
     for row in rows:
-        print(row[0])
         temp.append(row[2])
         humid.append(row[3])
         dates.append(row[0])

@@ -21,9 +21,11 @@
     background-color: darkgray;
     border-radius: 10px;
 ">
-    <input type="date" name="start_date" class="datepick" value="">
-    <input type="date" name="end_date" class="datepick" value="">
-    <button type="button" class="btn btn-primary" name="button">
+    <input type="date" id="start_date" class="datepick" value=""> &nbsp;
+    <input type="date" id="end_date" class="datepick" value=""> &nbsp;
+    <input type="text" id="time_start" placeholder="01:00" />
+    <input type="text" id="time_end" placeholder="05:30" />
+    <button type="button" class="btn btn-primary" name="btn_filter" id="btn_filter">
       <i class="fa fa-search"></i>Filter
     </button>
   </div>
@@ -33,53 +35,72 @@
 
 <script>
 // $('.datepick').datepicker();
-$.get("/api/get_temp", function(data){
-  Highcharts.chart('container', {
-    chart: {
-        type: 'area'
-    },
-    title: {
-        text: 'Historic and Estimated Worldwide Population Distribution by Region'
-    },
-    subtitle: {
-        text: 'Source: Wikipedia.org'
-    },
-    xAxis: {
-        categories: data.categories,
-        tickmarkPlacement: 'on',
-        title: {
-            enabled: false
-        }
-    },
-    yAxis: {
-        title: {
-            text: 'Percent'
-        }
-    },
-    tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f})<br/>',
-        split: true
-    },
-    plotOptions: {
-        area: {
-            stacking: 'percent',
-            lineColor: '#ffffff',
-            lineWidth: 1,
-            marker: {
-                lineWidth: 1,
-                lineColor: '#ffffff'
-            }
-        }
-    },
-    series: [{
-        name: 'Temperature',
-        data: data.temperature
-    }, {
-        name: 'Humidity',
-        data: data.humidity
-    }]
+
+function plot(start_date_, end_date_) {
+  let url = "/api/get_temp?start_date=" + start_date_ + "&end_date=" + end_date_;
+  console.log("Api Url:", url);
+
+  $.get(url, function(data){
+    Highcharts.chart('container', {
+      chart: {
+          type: 'area'
+      },
+      title: {
+          text: 'Historic and Estimated Worldwide Population Distribution by Region'
+      },
+      subtitle: {
+          text: 'Source: Wikipedia.org'
+      },
+      xAxis: {
+          categories: data.categories,
+          tickmarkPlacement: 'on',
+          title: {
+              enabled: false
+          }
+      },
+      yAxis: {
+          title: {
+              text: 'Percent'
+          }
+      },
+      tooltip: {
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f})<br/>',
+          split: true
+      },
+      plotOptions: {
+          area: {
+              stacking: 'percent',
+              lineColor: '#ffffff',
+              lineWidth: 1,
+              marker: {
+                  lineWidth: 1,
+                  lineColor: '#ffffff'
+              }
+          }
+      },
+      series: [{
+          name: 'Temperature',
+          data: data.temperature
+      }, {
+          name: 'Humidity',
+          data: data.humidity
+      }]
+  });
+  });
+
+}
+
+$("#btn_filter").click(function(){
+  let start_date = $("#start_date").val();
+  let end_date = $("#end_date").val();
+
+  console.log("btn clicked", start_date, end_date)
+  plot(start_date, end_date);
 });
-});
+
+// call the plot function passing start date and end date = 0, 0
+plot('2018-04-20', '2018-04-23');
+
 
 
 </script>

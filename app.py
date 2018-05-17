@@ -4,6 +4,9 @@ from flask_restful import Resource, Api
 import sqlite3
 from sqlite3 import Error
 
+#constant for database
+DATABASE = "sqlite-autoconf-3230100/project"
+
 def create_connection(db_file):
     try:
         conn = sqlite3.connect(db_file)
@@ -67,8 +70,7 @@ def plot():
 @app.route('/settings')
 def settings():
     # create a database connection
-    database = "/Users/tohir/Downloads/sqlite-autoconf-3230100/project"
-    conn = create_connection(database)
+    conn = create_connection(DATABASE)
 
     with conn:
         print("Get last settings")
@@ -86,8 +88,7 @@ def saveSettings():
     humidity = request.form['humidity']
 
     # create a database connection
-    database = "/Users/tohir/Downloads/sqlite-autoconf-3230100/project"
-    conn = create_connection(database)
+    conn = create_connection(DATABASE)
     with conn:
         print("Send temperature and humidity across")
         #select_all_temp(conn)
@@ -99,14 +100,13 @@ def saveSettings():
 
 @app.route('/api/get_temp', methods=["GET", "POST"])
 def temperature():
-    database = "/Users/tohir/Downloads/sqlite-autoconf-3230100/project"
 
     # get url params
     startDate = request.args.get('start_date')
     endDate = request.args.get('end_date')
 
     # create a database connection
-    conn = create_connection(database)
+    conn = create_connection(DATABASE)
     with conn:
         print("2. Query all temps")
         #select_all_temp(conn)

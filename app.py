@@ -3,9 +3,12 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_restful import Resource, Api
 import sqlite3
 from sqlite3 import Error
+<<<<<<< HEAD
 import sys
 
 sensor_humidity, sensor_temperature, sensor_flame = 0.2, 3.2,False
+=======
+>>>>>>> cf616c7312353b311ae4d35bbaffbd3b477dd331
 
 #constant for database
 DATABASE = "sqlite-autoconf-3230100/project"
@@ -33,10 +36,13 @@ def select_all_temp(conn, startDate, endDate):
     print("executed")
     return cur.fetchall()
 
+<<<<<<< HEAD
 def temp_control_module(set_temperature,set_humidity):
 
     print(set_humidity)
 
+=======
+>>>>>>> cf616c7312353b311ae4d35bbaffbd3b477dd331
 def get_recent_setting(conn):
     cur = conn.cursor()
     cur.execute('SELECT * FROM settings order by ROWID desc limit 1')
@@ -91,6 +97,7 @@ def saveSettings():
 
     # get inputs from form
 
+<<<<<<< HEAD
     set_temperature = request.form['temperature']
     set_humidity = request.form['humidity']
 
@@ -100,13 +107,21 @@ def saveSettings():
     if sensor_temperature != set_temperature:
         temp_control_module(set_temperature,set_humidity)
 
+=======
+    temperature = request.form['temperature']
+    humidity = request.form['humidity']
+>>>>>>> cf616c7312353b311ae4d35bbaffbd3b477dd331
 
     # create a database connection
     conn = create_connection(DATABASE)
     with conn:
         print("Send temperature and humidity across")
         #select_all_temp(conn)
+<<<<<<< HEAD
         rows = save_settings(conn, set_temperature, set_humidity)
+=======
+        rows = save_settings(conn, temperature, humidity)
+>>>>>>> cf616c7312353b311ae4d35bbaffbd3b477dd331
 
     #return render_template("settings.html", )
     return redirect(url_for('settings'))
@@ -140,9 +155,14 @@ def temperature():
 
 @app.route('/Power')
 def power():
+<<<<<<< HEAD
 
     sys.exit()
 
+=======
+    # Render Templates
+     return render_template(".html")
+>>>>>>> cf616c7312353b311ae4d35bbaffbd3b477dd331
 
 @app.route("/Reading")
 def lab_temp():
@@ -156,4 +176,7 @@ def lab_temp():
 
 if __name__ == '__main__':
     app.run()
+<<<<<<< HEAD
     app.run(debug=True)
+=======
+>>>>>>> cf616c7312353b311ae4d35bbaffbd3b477dd331

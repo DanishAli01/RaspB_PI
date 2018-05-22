@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <fieldset>
+        <legend>Settings</legend>
+        <form class="form-horizontal" method="post" action='/result'>
+
+          <div class="form-group">
+            <label for="temperature">Max Temperatur</label>
+            <input type="number" class="form-control" id="temperature" name="temperature" aria-describedby="tmpHelp" placeholder="Max Temperature">
+            <small id="tmpHelp" class="form-text text-muted">Set the max temperature at which the fan would be switched on.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="humidity">Humidity</label>
+            <input type="number" class="form-control" id="humidity" name="humidity" aria-describedby="hmdHelp" placeholder="Humidity">
+            <small id="hmdHelp" class="form-text text-muted">Set the min humidity at which the heating system would be switched on.</small>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+      </fieldset>
+    </div>
+
+    <div class="col-sm">
+      <fieldset>
+        <legend>Current Settings</legend>
+        <h3>Temperature: {{temp}}</h3>
+        <h3>Humidity: {{humid}}</h3>
+
+      </fieldset>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

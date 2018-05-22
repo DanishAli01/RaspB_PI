@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title> Welcome to Templates/layouts</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<h1 class="text-center"> Home Assistance </h1>
+{% include 'includes/_navbar.html' %}
+
+<div class="welcome">
+
+    {% block body %} {% endblock %}
+
+</div>
+
+
+<footer class="text-center" style="  border-top: 0.0625em solid lightgrey; bottom: 0; color: #000000;
+  height: 5em; background-color: black">
+  <p style=".col(12; @ta: center); padding: 1.25em; color: white">
+    <small>&copy; 2018 Danish Ali</small>
+  </p>
+</footer>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+
+
+</html>

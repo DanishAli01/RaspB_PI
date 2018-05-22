@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<meta http-equiv="refresh" content="5" >
+<div class="panel-body">
+<div class="jumbotron text-center">
+    <div class="lead" style="margin-top: 5%">
+            <h1>Real time conditions</h1>
+
+            <br>
+
+            <p style="
+             font: 'Arial Narrow', sans-serif;
+
+  font-size: 42px;
+  padding: 80px 50px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+
+
+
+">
+
+                Temperature: {{"{0:0.1f}".format(temp) }}°F <br>
+                Humidity: {{"{0:0.1f}".format(hum)}}% <br>
+                Flame Sensor Status : {{status_flame}}
+
+
+            </p>
+
+
+        </div>
+</div>
+</div>
+
+{% endblock %}

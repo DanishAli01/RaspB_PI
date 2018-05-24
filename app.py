@@ -148,7 +148,7 @@ def temperature():
 @app.route('/Power')
 def power():
     # Render Templates
-     return render_template(".html")
+     
 
 @app.route("/Reading")
 def lab_temp():

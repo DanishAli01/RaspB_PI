@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+
 <meta http-equiv="refresh" content="5" >
 <div class="panel-body">
 <div class="jumbotron text-center">
@@ -9,9 +10,26 @@
 
             <br>
 
-            <h2 class="d-inline p-2 bg-primary text-white">Temperature: {{"{0:0.1f}".format(temp) }}°F</h2>
+            <p style="
+             font: 'Arial Narrow', sans-serif;
 
-            <br><br><h2 class="d-inline p-2 bg-primary text-white">Humidity: {{"{0:0.1f}".format(hum)}}%</h2>
+  font-size: 42px;
+  padding: 80px 50px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+
+
+
+">
+
+                Temperature: {{"{0:0.1f}".format(temp) }}°F <br>
+                Humidity: {{"{0:0.1f}".format(hum)}}% <br>
+                Flame Sensor Status : {{status_flame}}
+
+
+            </p>
+
 
         </div>
 </div>

@@ -22,8 +22,7 @@
 ">
     <input type="date" id="start_date" class="datepick" value=""> &nbsp;
     <input type="date" id="end_date" class="datepick" value=""> &nbsp;
-    <input type="text" id="time_start" placeholder="01:00" />
-    <input type="text" id="time_end" placeholder="05:30" />
+
     <button type="button" class="btn btn-primary" name="btn_filter" id="btn_filter">
       <i class="fa fa-search"></i>Filter
     </button>
@@ -42,13 +41,13 @@ function plot(start_date_, end_date_) {
   $.get(url, function(data){
     Highcharts.chart('container', {
       chart: {
-          type: 'area'
+          type: 'line'
       },
       title: {
-          text: 'Historic and Estimated Worldwide Population Distribution by Region'
+          text: 'Temperature/Humidity Reading'
       },
       subtitle: {
-          text: 'Source: Wikipedia.org'
+          text: 'Source: Sensor Data'
       },
       xAxis: {
           categories: data.categories,

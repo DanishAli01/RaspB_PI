@@ -26,7 +26,7 @@ def select_all_temp(conn, startDate, endDate):
         sql = sql + " and tdate <= ?"
     print(sql)
 
-    cur.execute(sql, (startDate, endDate))
+    cur.execute(sql, [startDate, endDate])
     print("executed")
     return cur.fetchall()
 
@@ -35,11 +35,21 @@ def get_recent_setting(conn):
     cur.execute('SELECT * FROM settings order by ROWID desc limit 1')
     return cur.fetchall()
 
-def save_settings(conn, temperature, humidity):
+def save_settings(conn, temperature, humidity, emergency_phone):
     cur = conn.cursor()
-    cur.execute('replace into settings values (?,?)', [temperature, humidity])
+    #delete previous entries
+    cur.execute('delete from settings')
+
+    # insert new record inside table
+    cur.execute('replace into settings values (?,?,?)', [temperature, humidity, emergency_phone])
 
     return conn.commit()
+
+#Method to send SMS incase of emergency_phone
+def send_emergency_message(conn):
+    cur = conn.cursor()
+    // fetch emergency phone number
+    cur.execute('SELECT * FROM settings order by ROWID desc limit 1')
 
 
 
@@ -72,27 +82,38 @@ def settings():
     # create a database connection
     conn = create_connection(DATABASE)
 
+    temp = 0
+    humid = 0
+    phone = ""
+
     with conn:
         print("Get last settings")
         #select_all_temp(conn)
         rows = get_recent_setting(conn)
 
-    return render_template("settings.html", temp=rows[0][0], humid=rows[0][1])
+    if rows:
+        temp=rows[0][0]
+        humid=rows[0][1]
+        phone=rows[0][2]
 
-@app.route('/result', methods = ['POST', 'GET'])
+
+    return render_template("settings.html", temp=temp, humid=humid, phone=phone)
+
+@app.route('/processSettings', methods = ['POST', 'GET'])
 def saveSettings():
 
     # get inputs from form
 
     temperature = request.form['temperature']
     humidity = request.form['humidity']
+    emergency_phone = request.form['emergency_phone']
 
     # create a database connection
     conn = create_connection(DATABASE)
     with conn:
         print("Send temperature and humidity across")
         #select_all_temp(conn)
-        rows = save_settings(conn, temperature, humidity)
+        rows = save_settings(conn, temperature, humidity, emergency_phone)
 
     #return render_template("settings.html", )
     return redirect(url_for('settings'))

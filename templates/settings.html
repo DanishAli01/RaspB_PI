@@ -7,18 +7,24 @@
     <div class="col-sm">
       <fieldset>
         <legend>Settings</legend>
-        <form class="form-horizontal" method="post" action='/result'>
+        <form class="form-horizontal" method="post" action='/processSettings'>
 
           <div class="form-group">
-            <label for="temperature">Max Temperatur</label>
-            <input type="number" class="form-control" id="temperature" name="temperature" aria-describedby="tmpHelp" placeholder="Max Temperature">
+            <label for="temperature">Max Temperature</label>
+            <input type="number" class="form-control" id="temperature" name="temperature" aria-describedby="tmpHelp" placeholder="Max Temperature" value="{{temp}}">
             <small id="tmpHelp" class="form-text text-muted">Set the max temperature at which the fan would be switched on.</small>
           </div>
 
           <div class="form-group">
             <label for="humidity">Humidity</label>
-            <input type="number" class="form-control" id="humidity" name="humidity" aria-describedby="hmdHelp" placeholder="Humidity">
+            <input type="number" class="form-control" id="humidity" name="humidity" aria-describedby="hmdHelp" placeholder="Humidity" value="{{humid}}">
             <small id="hmdHelp" class="form-text text-muted">Set the min humidity at which the heating system would be switched on.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="humidity">Phone Number</label>
+            <input type="number" class="form-control" id="emergency_phone" name="emergency_phone" aria-describedby="hmdHelp" placeholder="Emergency Phone" value="{{phone}}">
+            <small id="hmdHelp" class="form-text text-muted">Number to reach in an emergency situation.</small>
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -32,6 +38,7 @@
         <legend>Current Settings</legend>
         <h3>Temperature: {{temp}}</h3>
         <h3>Humidity: {{humid}}</h3>
+        <h3>Emergency Contact: {{phone}}</h3>
 
       </fieldset>
     </div>

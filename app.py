@@ -48,7 +48,7 @@ def save_settings(conn, temperature, humidity, emergency_phone):
 #Method to send SMS incase of emergency_phone
 def send_emergency_message(conn):
     cur = conn.cursor()
-    // fetch emergency phone number
+    # fetch emergency phone number
     cur.execute('SELECT * FROM settings order by ROWID desc limit 1')
 
 

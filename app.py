@@ -153,7 +153,7 @@ def power():
 @app.route("/Reading")
 def lab_temp():
     # Render Templates with conditional statements
-	humidity, temperature,flame = 1.2, 3.2, True
+	humidity, temperature,flame = 53.2, 23.2, True
 	if humidity is not None and temperature is not None:
 		return render_template("Reading.html",temp=temperature,hum=humidity,status_flame=flame)
 	else:

@@ -1,11 +1,17 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_restful import Resource, Api
 import sqlite3
 from sqlite3 import Error
+from  urllib import urlopen
 
 #constant for database
 DATABASE = "sqlite-autoconf-3230100/project"
+SMS_EMAIL = "otcleantech@gmail.com"
+PASSWORD = "P@$$w0rd123"
+SENDER = "AUTO-HOME"
+EMERGENCY_MSG = "There is an emergency in the house"
 
 def create_connection(db_file):
     try:
@@ -49,7 +55,17 @@ def save_settings(conn, temperature, humidity, emergency_phone):
 def send_emergency_message(conn):
     cur = conn.cursor()
     # fetch emergency phone number
-    cur.execute('SELECT * FROM settings order by ROWID desc limit 1')
+    cur.execute('SELECT emergency_phone FROM settings order by ROWID desc limit 1')
+    rows = cur.fetchall()
+
+    for row in rows:
+        phone_number = row[0]
+    #
+    # # call sms api
+    url= "https://www.smsgator.com/bulksms?email=" + SMS_EMAIL + "&password=" + PASSWORD + "&type=1&dlr=1&destination=" + "+" + str(phone_number) + "&sender=" + SENDER + "&message=" + EMERGENCY_MSG
+    print(url)
+    resp = urlopen(url)
+    return resp.read()
 
 
 
@@ -76,6 +92,16 @@ def about():
 @app.route('/plot')
 def plot():
     return render_template("plot.html")
+
+@app.route('/send_sms')
+def send_sms():
+    # create a database connection
+    conn = create_connection(DATABASE)
+    with conn:
+        response = send_emergency_message(conn)
+    # if response:
+    #     print(response)
+    return response
 
 @app.route('/settings')
 def settings():

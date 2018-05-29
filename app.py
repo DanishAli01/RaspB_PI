@@ -4,7 +4,7 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_restful import Resource, Api
 import sqlite3
 from sqlite3 import Error
-from  urllib import urlopen
+from  urllib.request import urlopen
 
 #constant for database
 DATABASE = "sqlite-autoconf-3230100/project"

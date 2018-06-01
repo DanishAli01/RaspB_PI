@@ -7,6 +7,7 @@
 
 {% extends 'layout.html' %}
 {% block body %}
+    <meta http-equiv="refresh" content="5">
 <style>
 
     .highcharts-credits{
@@ -24,8 +25,12 @@
 
 
 
+
+
+
 </style>
 
+<h2 class="jumbotron text-center" >Flame Sensor: {{ status_flame }}</h2><br>
 <div id="container" style="min-width: 210px; height: 400px; margin: 0 auto"></div>
 <div id="container2" style="min-width: 210px; height: 400px; margin: 0 auto"></div>
 <script>

@@ -1,7 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    <style>
+    .form-horizontal{
+        padding-bottom: 2rem;
+    }
+    legend {
 
+        padding-top:2rem;
+    }
+
+    </style>
 <div class="container">
   <div class="row">
     <div class="col-sm">
@@ -36,9 +45,9 @@
     <div class="col-sm">
       <fieldset>
         <legend>Current Settings</legend>
-        <h3>Temperature: {{temp}}</h3>
-        <h3>Humidity: {{humid}}</h3>
-        <h3>Emergency Contact: {{phone}}</h3>
+        <h5>Temperature: {{temp}}</h5>
+        <h5>Humidity: {{humid}}</h5>
+        <h5 style="color:red;">Emergency Contact: {{phone}}</h5>
 
       </fieldset>
     </div>

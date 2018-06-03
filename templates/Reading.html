@@ -30,8 +30,9 @@
 
 </style>
 
-<h2 class="jumbotron text-center" >Flame Sensor: {{ status_flame }}</h2><br>
+<h3 class="jumbotron text-center" style="color:red;" >Flame Sensor Triggered: {{ status_flame }}</h3><br>
 <div id="container" style="min-width: 210px; height: 400px; margin: 0 auto"></div>
+    <h3 class="jumbotron text-center">In Fahrenheit (F): <script>document.write(({{ temp }}*1.8 + 32).toFixed(2));</script></h3><br>
 <div id="container2" style="min-width: 210px; height: 400px; margin: 0 auto"></div>
 <script>
 

@@ -7,6 +7,7 @@ from sqlite3 import Error
 from  urllib.request import urlopen
 from random import *
 
+x = randint(1, 100)
 
 #constant for database
 DATABASE = "sqlite-autoconf-3230100/project"
@@ -101,9 +102,8 @@ def send_sms():
     conn = create_connection(DATABASE)
     with conn:
         response = send_emergency_message(conn)
-    # if response:
-    #     print(response)
-    return response
+        print(response)
+
 
 @app.route('/settings')
 def settings():

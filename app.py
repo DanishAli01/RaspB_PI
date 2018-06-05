@@ -4,7 +4,10 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_restful import Resource, Api
 import sqlite3
 from sqlite3 import Error
-from  urllib import urlopen
+from  urllib.request import urlopen
+from random import *
+
+x = randint(1, 100)
 
 #constant for database
 DATABASE = "sqlite-autoconf-3230100/project"
@@ -99,9 +102,8 @@ def send_sms():
     conn = create_connection(DATABASE)
     with conn:
         response = send_emergency_message(conn)
-    # if response:
-    #     print(response)
-    return response
+        print(response)
+
 
 @app.route('/settings')
 def settings():
@@ -179,11 +181,12 @@ def power():
 @app.route("/Reading")
 def lab_temp():
     # Render Templates with conditional statements
-	humidity, temperature,flame = 53.2, 23.2, True
+	humidity, temperature,flame = randint(20, 100), randint(-30, 50), True
 	if humidity is not None and temperature is not None:
 		return render_template("Reading.html",temp=temperature,hum=humidity,status_flame=flame)
 	else:
 		return render_template("No_sensor.html")
 
 if __name__ == '__main__':
-    app.run()
+    app.app(debug=True)
+

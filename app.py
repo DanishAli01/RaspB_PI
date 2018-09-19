@@ -4,8 +4,9 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_restful import Resource, Api
 import sqlite3
 from sqlite3 import Error
-from  urllib.request import urlopen
+from  urllib import urlopen
 from random import *
+import datetime
 
 x = randint(1, 100)
 
@@ -39,6 +40,14 @@ def select_all_temp(conn, startDate, endDate):
     print("executed")
     return cur.fetchall()
 
+def save_sensor_data(conn, temperature, humidity):
+    cur = conn.cursor()
+
+    # insert new record inside temp table
+    cur.execute("INSERT INTO temps VALUES (date('now'), time('now'),?,?)", [temperature, humidity])
+
+    return conn.commit()
+
 def get_recent_setting(conn):
     cur = conn.cursor()
     cur.execute('SELECT * FROM settings order by ROWID desc limit 1')
@@ -47,10 +56,10 @@ def get_recent_setting(conn):
 def save_settings(conn, temperature, humidity, emergency_phone):
     cur = conn.cursor()
     #delete previous entries
-    cur.execute('delete from settings')
+    cur.execute('DELETE FROM settings')
 
     # insert new record inside table
-    cur.execute('replace into settings values (?,?,?)', [temperature, humidity, emergency_phone])
+    cur.execute('INSERT INTO settings values (?,?,?)', [temperature, humidity, emergency_phone])
 
     return conn.commit()
 
@@ -146,6 +155,23 @@ def saveSettings():
     #return render_template("settings.html", )
     return redirect(url_for('settings'))
 
+@app.route('/api/post_reading', methods=["POST"])
+def post_reading():
+    # get post params
+    temperature = request.args.get('temperature')
+    humidity = request.args.get('humidity')
+
+    print(temperature, humidity)
+
+    # create a database connection
+    conn = create_connection(DATABASE)
+    with conn:
+        print("posting data from sensor")
+        #select_all_temp(conn)
+        save_sensor_data(conn, temperature, humidity)
+
+    return "Ok"
+
 
 @app.route('/api/get_temp', methods=["GET", "POST"])
 def temperature():
@@ -187,5 +213,5 @@ def lab_temp():
 	else:
 		return render_template("No_sensor.html")
 
-
-
+if __name__ == '__main__':
+    app.run(debug=True)

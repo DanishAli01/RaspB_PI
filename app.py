@@ -187,6 +187,5 @@ def lab_temp():
 	else:
 		return render_template("No_sensor.html")
 
-if __name__ == '__main__':
-    app.app(debug=True)
+
 
